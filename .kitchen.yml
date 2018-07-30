@@ -4,7 +4,13 @@ driver:
 
 provisioner:
   name: chef_zero
-  #require_chef_omnibus: 12.21.1
+  product_name: chef
+  product_version: latest
+  #product_version: 12.21.1
+  install_strategy: once
+
+verifier:
+  name: inspec
 
 platforms:
   - name: windows-2008-r2
@@ -33,6 +39,9 @@ suites:
   - name: default
     run_list:
      - recipe[windows_ad::default]
+    verifier:
+      inspec_tests:
+        - test/integration/default
     attributes:
   - name: forest
     run_list:
