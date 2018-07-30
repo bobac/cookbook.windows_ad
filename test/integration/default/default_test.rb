@@ -9,8 +9,7 @@ describe os.windows? do
   it { should eq true }
 end
 
-
-
+# Uses Name Property for Get-WindowsFeature to verify
 if os.release >= '6.2'
   describe windows_feature('GPMC') do
     it { should be_installed }
@@ -41,11 +40,15 @@ if os.release >= '6.2'
   end    
 end
 
+# Uses execute resource to run dism commands
 if os.release < '6.2'
-  describe windows_feature('NetFx3') do
-      it { should be_installed }
+  describe command('dism /online /get-featureinfo /featurename:NetFx3') do
+    its('stdout') { should include 'State : Enabled' }
   end
-  describe windows_feature('AD-Domain-Services') do
-    it { should be_installed }
+  describe command('dism /online /get-featureinfo /featurename:Microsoft-Windows-GroupPolicy-ServerAdminTools-Update') do
+    its('stdout') { should include 'State : Enabled' }
+  end
+  describe command('dism /online /get-featureinfo /featurename:DirectoryServices-DomainController') do
+    its('stdout') { should include 'State : Enabled' }
   end
 end
