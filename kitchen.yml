@@ -6,7 +6,6 @@ provisioner:
   name: chef_zero
   product_name: chef
   product_version: latest
-  #product_version: 12.21.1
   install_strategy: once
 
 verifier:
@@ -46,7 +45,7 @@ suites:
   - name: forest
     run_list:
       - recipe[windows_ad::default]
-      - recipe[windows_ad::contoso]
+      - recipe[test::setup_forest]
     verifier:
       inspec_tests:
         - test/integration/default
