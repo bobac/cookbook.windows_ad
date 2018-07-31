@@ -47,4 +47,8 @@ suites:
     run_list:
       - recipe[windows_ad::default]
       - recipe[windows_ad::contoso]
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/forest
     attributes:
