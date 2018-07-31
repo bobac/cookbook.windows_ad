@@ -16,9 +16,9 @@ windows_ad_domain domain do
   domain_user user
   case node['os_version']
   when '6.1'
-    options ({ 'InstallDNS' => 'yes' })
+    options('InstallDNS' => 'yes')
   when '6.2'
-    options ({ 'InstallDNS' => nil })
+    options('InstallDNS' => nil)
   end
   action :create
 end

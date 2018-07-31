@@ -1,5 +1,3 @@
-user = 'Administrator'
-pass = 'Passw0rd'
 domain = 'contoso.local'
 
 windows_ad_user 'John Doe' do
