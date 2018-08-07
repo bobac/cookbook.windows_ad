@@ -5,12 +5,8 @@
 # The Inspec reference, with examples and extensive documentation, can be
 # found at http://inspec.io/docs/reference/resources/
 
-describe os.windows? do
-  it { should eq true }
-end
-
 # Uses Name Property for Get-WindowsFeature to verify
-if os.release >= '6.2'
+if os.release.include?('6.2') || os.release.include?('6.3') || os.release.include?('10')
   describe windows_feature('GPMC') do
     it { should be_installed }
   end
@@ -37,11 +33,11 @@ if os.release >= '6.2'
   end
   describe windows_feature('AD-Domain-Services') do
     it { should be_installed }
-  end    
+  end
 end
 
 # Uses execute resource to run dism commands
-if os.release < '6.2'
+if os.release.include?('6.1')
   describe command('dism /online /get-featureinfo /featurename:NetFx3') do
     its('stdout') { should include 'State : Enabled' }
   end
