@@ -38,11 +38,13 @@ action :create do
       cmd << " -DomainName #{new_resource.name}"
       cmd << " -SafeModeAdministratorPassword (convertto-securestring '#{new_resource.safe_mode_pass}' -asplaintext -Force)"
       cmd << ' -Force:$true'
+      cmd << " -SysvolPath:#{new_resource.sysvol_path}"
       cmd << ' -NoRebootOnCompletion' if !new_resource.restart
     else Chef::Version.new(node['os_version']) <= Chef::Version.new('6.1')
       cmd = 'dcpromo -unattend'
       cmd << " -newDomain:#{new_resource.type}"
       cmd << " -NewDomainDNSName:#{new_resource.name}"
+      cmd << " -SysvolPath:#{new_resource.sysvol_path}"
       if !new_resource.restart
         cmd << ' -RebootOnCompletion:No'
       else
